@@ -1,0 +1,221 @@
+-----------------------
+--Project Deliverable 1
+--Nitisha Nahar
+--JD37852
+--Inventory database
+-----------------------
+
+--------------------------
+--Drop Tables and Sequence
+--------------------------
+
+DROP TABLE Music_CD_Order;
+DROP TABLE Book_Order;
+DROP TABLE LDB4_Customer;
+DROP TABLE MusicCD_Inventory;
+DROP TABLE Book_Inventory;
+DROP SEQUENCE LDB4_Customer_ID_seq;
+
+----------------------
+--Book_Inventory Table
+----------------------
+
+CREATE TABLE Book_Inventory (
+ISBN INT NOT NULL,
+Title VARCHAR(255),
+Authors VARCHAR(255),
+Edition INT,
+Price_Book INT NOT NULL,
+Category VARCHAR (50),
+Keywords VARCHAR (255),
+Publisher VARCHAR(255),
+Quantity INT NOT NULL,
+CONSTRAINT Book_Inventory_ISBN_UN UNIQUE (ISBN)
+);
+
+
+-------------------------
+--MusicCD_Inventory Table
+-------------------------
+CREATE TABLE MusicCD_Inventory (
+CD_ID INT NOT NULL,
+Title VARCHAR(255),
+Artists VARCHAR(255),
+Release_Year INT,
+Price_CD INT NOT NULL,
+Category VARCHAR (50),
+Keywords VARCHAR (255),
+Recording_Company VARCHAR (255),
+Quantity INT NOT NULL,
+CONSTRAINT MusicCD_Inventory_CD_ID_UN UNIQUE (CD_ID)
+);
+
+----------------
+--Customer Table
+----------------
+
+CREATE TABLE LDB4_Customer (
+Customer_ID INT NOT NULL,
+Name VARCHAR(255),
+Address VARCHAR(255),
+City VARCHAR (255),
+State VARCHAR (255),
+Country VARCHAR (255),
+Phone_Number INT,
+CONSTRAINT Customer_ID_UN UNIQUE (Customer_ID)
+);
+
+------------------
+--Book_Order Table
+------------------
+
+CREATE TABLE Book_Order (
+Order_ID_B INT NOT NULL PRIMARY KEY,
+Customer_ID INT NOT NULL,
+ISBN INT NOT NULL,
+Quantity_Purchase INT NOT NULL,
+Total_Price INT,
+FOREIGN KEY (ISBN) REFERENCES Book_Inventory(ISBN),
+FOREIGN KEY (Customer_ID) REFERENCES LDB4_Customer(Customer_ID)
+);
+
+----------------------
+--Music_CD_Order Table
+----------------------
+
+CREATE TABLE Music_CD_Order (
+Order_ID_M INT NOT NULL PRIMARY KEY,
+Customer_ID INT NOT NULL,
+CD_ID INT NOT NULL,
+Quantity_Purchase INT NOT NULL,
+Total_Price INT,
+FOREIGN KEY (CD_ID) REFERENCES MusicCD_Inventory(CD_ID),
+FOREIGN KEY (Customer_ID) REFERENCES LDB4_Customer(Customer_ID)
+);
+
+--------------------------
+--LDB4_Customer_ID_seq Sequence
+--------------------------
+
+CREATE SEQUENCE  LDB4_Customer_ID_seq START WITH 50000 NOCYCLE ;
+
+--------------------------------------
+--Insert statements for all the tables
+--------------------------------------
+
+INSERT INTO Book_Inventory (ISBN, Title, Authors, Edition, Price_Book, Category, Keywords, Publisher, Quantity) VALUES (393019217, '"Surely youre joking, Mr. Feynman" : adventures of a curious character', 'Feynman, Richard Phillips', 1985, 50, 'Biography', 'Joking, Feynman',	'New York : W.W. Norton', 10);
+INSERT INTO Book_Inventory  (ISBN, Title, Authors, Edition, Price_Book, Category, Keywords, Publisher, Quantity) VALUES (201021153,	'The Feynman lectures on physics', 'Feynman, Richard Phillips',	1963, 40,	'Non-Fiction', 'Feynman, Physics', 'London : Addison-Wesley', 8);
+INSERT INTO Book_Inventory  (ISBN, Title, Authors, Edition, Price_Book, Category, Keywords, Publisher, Quantity) VALUES (978034581,	'12 Rules for Life: An Antidote to Chaos',	'Jordan B. Peterson', 2018,30,	'Non Fiction', 'Life, Chaos',	'Toronto : Random House Canada', 9);
+INSERT INTO Book_Inventory  (ISBN, Title, Authors, Edition, Price_Book, Category, Keywords, Publisher, Quantity) VALUES (811858049,	'Lets Make Cookies',	'Elinor Klivans',	2007, 20,	'Non Fiction', 'Cooking, Baking, Cookies',	'Chronicle Books',5);
+INSERT INTO Book_Inventory  (ISBN, Title, Authors, Edition, Price_Book, Category, Keywords, Publisher, Quantity) VALUES (1551301474,	'Richard Lionheart, the Crusader King',	'W. Gordon West',	2000, 25,	'Biography','Richard Lionheart, King', 'Canadian Scholars Press',2);
+INSERT INTO Book_Inventory  (ISBN, Title, Authors, Edition, Price_Book, Category, Keywords, Publisher, Quantity) VALUES (750663197,	'Strategic Operations Management',	'Steve Brown',	2005, 55,	'Business Non-Fiction', 'Management, Operations',	'Butterworth-Heinemann', 10);
+INSERT INTO Book_Inventory  (ISBN, Title, Authors, Edition, Price_Book, Category, Keywords, Publisher, Quantity) VALUES (1558583998,	'The Sleeping Beauty',	'Jacob Grimm',	1995, 10,	'Fiction', 'Fantasy, Beauty, Sleeping',	'NorthSouth',30);
+INSERT INTO Book_Inventory  (ISBN, Title, Authors, Edition, Price_Book, Category, Keywords, Publisher, Quantity) VALUES (595657052,	'Dreams Happen Only When Youre Sleeping',	'M. Shay',	2003, 35,	'Literature', 'Dreams, Sleep',	'iUniverse', 7);
+INSERT INTO Book_Inventory  (ISBN, Title, Authors, Edition, Price_Book, Category, Keywords, Publisher, Quantity) VALUES (865734909,	'The Painted Wall',	'Sasha Cohen',	2001, 30,	'Biography', 'Sasha, Paint',	'Quarry Books', 8);
+INSERT INTO Book_Inventory  (ISBN, Title, Authors, Edition, Price_Book, Category, Keywords, Publisher, Quantity) VALUES (1842156926,	'Paint Finishes (Do it Yourself)',	'Sasha Cohen',	2002, 25,	'Do it yourself', 'Paint, Sasha',	'Southwater Publishing', 8);
+
+INSERT INTO MusicCD_Inventory  (CD_ID, Title, Artists, Release_Year, Price_CD, Category, Keywords, Recording_Company, Quantity) VALUES (1000,	'Toosie Slide',	'Drake',	2020,	30,	'Hip-Hop',	'Drake, Hip-Hop',	'OZ',	50);
+INSERT INTO MusicCD_Inventory  (CD_ID, Title, Artists, Release_Year, Price_CD, Category, Keywords, Recording_Company, Quantity) VALUES (1001,	'Music',	'Madonna',	2000,	25,	'Pop',	'Madonna, Pop',	'Warner Records/Maverick',	40);
+INSERT INTO MusicCD_Inventory  (CD_ID, Title, Artists, Release_Year, Price_CD, Category, Keywords, Recording_Company, Quantity) VALUES (1002,	'High Off Life	Future', 'Drake',	2020,	35,	'Hip-Hop',	'Future, Drake',	'Chalice',	10);
+INSERT INTO MusicCD_Inventory  (CD_ID, Title, Artists, Release_Year, Price_CD, Category, Keywords, Recording_Company, Quantity) VALUES (1003,	'Future Nostalgia',	'Dua Lipa',	2020,	30,	'Pop',	'Dua, Lipa, Nostalgia',	'Warner Records',	3);
+INSERT INTO MusicCD_Inventory  (CD_ID, Title, Artists, Release_Year, Price_CD, Category, Keywords, Recording_Company, Quantity) VALUES (1004,	'Stuck with U',	'Ariana Grande, Justin Bieber',	2001,	25,	'Pop',	'Stuck, Ariana, Grande, Justin', 	'Warner Records/Maverick',	48);
+INSERT INTO MusicCD_Inventory  (CD_ID, Title, Artists, Release_Year, Price_CD, Category, Keywords, Recording_Company, Quantity) VALUES (1005,	'Certified Hitmaker',	'Lil Mosey',	2005,	20,	'Retro',	'Lil, Hitmaker',	'Interscope Records',	69);
+INSERT INTO MusicCD_Inventory  (CD_ID, Title, Artists, Release_Year, Price_CD, Category, Keywords, Recording_Company, Quantity) VALUES (1006,	'Please Excuse Me For Being Antisocial',	'Roddy Ricch',	2008,	20,	'Hip-Hop',	'Antisocial, Roddy',	'ATL Jacob',	46);
+INSERT INTO MusicCD_Inventory  (CD_ID, Title, Artists, Release_Year, Price_CD, Category, Keywords, Recording_Company, Quantity) VALUES (1007,	'After Hours	The Weeknd', 'ABC',	2020,	30,	'Contemporary',	'Weekend, Hours',	'XO', 0);
+INSERT INTO MusicCD_Inventory  (CD_ID, Title, Artists, Release_Year, Price_CD, Category, Keywords, Recording_Company, Quantity) VALUES (1008,	'Where the Light Is	Surfaces',	'ABC', 2007,	30,	'Acoustic',	'Light, Surfaces',	'John Mayers',	39);
+INSERT INTO MusicCD_Inventory  (CD_ID, Title, Artists, Release_Year, Price_CD, Category, Keywords, Recording_Company, Quantity) VALUES (1009,	'Birds In The Trap Sing McKnight',	'Travis Scott',	2016,	27,	'Hip-Hop',	'Birds, Trap, Travis, Scott',	'Grand Hustle Records',	38);
+
+INSERT INTO LDB4_Customer (Customer_ID, Name, Address, City, State, Country, Phone_Number) VALUES (LDB4_Customer_ID_seq.nextval, 'Jack Quick', '10 Main St', 'Austin', 'Texas', 'USA', 3987654378);
+INSERT INTO LDB4_Customer (Customer_ID, Name, Address, City, State, Country, Phone_Number) VALUES (LDB4_Customer_ID_seq.nextval, 'Joe Williams', '20 Plenty St', 'Rockville', 'Virginia', 'USA', 7685945689);
+INSERT INTO LDB4_Customer (Customer_ID, Name, Address, City, State, Country, Phone_Number) VALUES (LDB4_Customer_ID_seq.nextval, 'Marie Jones','101 Main St', 'Elkridge', ' West Virginia', 'USA', 6574930456);
+INSERT INTO LDB4_Customer (Customer_ID, Name, Address, City, State, Country, Phone_Number) VALUES (LDB4_Customer_ID_seq.nextval, 'Pam Wilson', '108 Main St', 'Los Angeles', 'California', 'USA',5785947689);
+INSERT INTO LDB4_Customer (Customer_ID, Name, Address, City, State, Country, Phone_Number) VALUES (LDB4_Customer_ID_seq.nextval, 'Kumar Rao', '20 Main St', 'Parlier', 'California', 'USA',7687595689);
+INSERT INTO LDB4_Customer (Customer_ID, Name, Address, City, State, Country, Phone_Number) VALUES (LDB4_Customer_ID_seq.nextval, 'Mary Slim', '90 Plenty St', 'Modesto', 'Vriginia', 'USA',4565945689);
+INSERT INTO LDB4_Customer (Customer_ID, Name, Address, City, State, Country, Phone_Number) VALUES (LDB4_Customer_ID_seq.nextval, 'Jude Bigbelly', '101 Main St', 'Stockton', 'California', 'USA',5409845689);
+INSERT INTO LDB4_Customer (Customer_ID, Name, Address, City, State, Country, Phone_Number) VALUES (LDB4_Customer_ID_seq.nextval, 'Pamela Reddy', '107 Main St','Reston', 'Virginia', 'USA',7686945689);
+INSERT INTO LDB4_Customer (Customer_ID, Name, Address, City, State, Country, Phone_Number) VALUES (LDB4_Customer_ID_seq.nextval, 'Ann Phat', '30 Main St', 'Tujunga', 'Delaware', 'USA',5789945689);
+INSERT INTO LDB4_Customer (Customer_ID, Name, Address, City, State, Country, Phone_Number) VALUES (LDB4_Customer_ID_seq.nextval, 'Jenny Ross', '40 Plenty St', 'San Diego', 'California', 'USA',8945945689);
+
+INSERT INTO Book_Order (Order_ID_B, Customer_ID, ISBN, Quantity_Purchase, Total_Price) VALUES ( 900001, 50004, 201021153, 2, 80);
+INSERT INTO Book_Order (Order_ID_B, Customer_ID, ISBN, Quantity_Purchase, Total_Price) VALUES ( 900002, 50009, 978034581, 1, 30);
+INSERT INTO Book_Order (Order_ID_B, Customer_ID, ISBN, Quantity_Purchase, Total_Price) VALUES ( 900003, 50001, 201021153, 4, 160);
+INSERT INTO Book_Order (Order_ID_B, Customer_ID, ISBN, Quantity_Purchase, Total_Price) VALUES ( 900004, 50004, 393019217, 3, 150);
+INSERT INTO Book_Order (Order_ID_B, Customer_ID, ISBN, Quantity_Purchase, Total_Price) VALUES ( 900005, 50007, 865734909, 1, 30);
+INSERT INTO Book_Order (Order_ID_B, Customer_ID, ISBN, Quantity_Purchase, Total_Price) VALUES ( 900006, 50006, 1558583998, 6, 60);
+INSERT INTO Book_Order (Order_ID_B, Customer_ID, ISBN, Quantity_Purchase, Total_Price) VALUES ( 900007, 50005, 201021153, 4, 160);
+
+INSERT INTO Music_CD_Order (Order_ID_M, Customer_ID, CD_ID, Quantity_Purchase, Total_Price) VALUES (900007, 50008, 1002, 1, 35);
+INSERT INTO Music_CD_Order (Order_ID_M, Customer_ID, CD_ID, Quantity_Purchase, Total_Price) VALUES (900008, 50004, 1003, 1, 30);
+INSERT INTO Music_CD_Order (Order_ID_M, Customer_ID, CD_ID, Quantity_Purchase, Total_Price) VALUES (900009, 50009, 1009, 3, 81);
+INSERT INTO Music_CD_Order (Order_ID_M, Customer_ID, CD_ID, Quantity_Purchase, Total_Price) VALUES (900010, 50009, 1001, 4, 100);
+INSERT INTO Music_CD_Order (Order_ID_M, Customer_ID, CD_ID, Quantity_Purchase, Total_Price) VALUES (900011, 50002, 1002, 2, 70);
+INSERT INTO Music_CD_Order (Order_ID_M, Customer_ID, CD_ID, Quantity_Purchase, Total_Price) VALUES (900012, 50005, 1002, 1, 35);
+
+------------
+--Operations
+------------
+
+----------------------------------------------------------------------------
+--1.	List all products in inventory (just a few columns for each product)
+----------------------------------------------------------------------------
+
+SELECT Book_Inventory.TITLE, Book_Inventory.AUTHORS, Book_Inventory.QUANTITY
+FROM Book_Inventory
+union ALL 
+SELECT MusicCD_Inventory.TITLE, MusicCD_Inventory.Artists,  MusicCD_Inventory.QUANTITY
+FROM MusicCD_Inventory;
+
+-----------------------------------------------------------------
+--2.	List all details of a product given its unique identifier
+-----------------------------------------------------------------
+
+SELECT *
+FROM Book_Inventory
+WHERE ISBN = 201021153;
+
+
+-------------------------------------------------------------
+--3.	List each product(s) of a particular author or artist
+-------------------------------------------------------------
+SElect *
+FROM Book_Inventory
+WHERE Authors = 'Feynman, Richard Phillips';
+
+--------------------------------------------------
+--4.	List each product with at least quantity 4 
+--------------------------------------------------
+
+SELECT Book_Inventory.TITLE, Book_Inventory.AUTHORS, Book_Inventory.QUANTITY
+FROM Book_Inventory
+WHERE QUANTITY >= 4
+union ALL 
+SELECT MusicCD_Inventory.TITLE, MusicCD_Inventory.Artists,  MusicCD_Inventory.QUANTITY
+FROM MusicCD_Inventory
+WHERE QUANTITY >= 4;
+
+----------------------------------------------
+--5.	List each product that is out of stock
+----------------------------------------------
+
+SELECT Book_Inventory.TITLE, Book_Inventory.AUTHORS, Book_Inventory.QUANTITY
+FROM Book_Inventory
+WHERE QUANTITY = 0
+union ALL 
+SELECT MusicCD_Inventory.TITLE, MusicCD_Inventory.Artists,  MusicCD_Inventory.QUANTITY
+FROM MusicCD_Inventory
+WHERE QUANTITY = 0;
+
+-----------------------------------------------------------------
+--6.	List each product that is  bought by at least 3 customers
+-----------------------------------------------------------------
+
+select Book_Order.ISBN as Book_or_CD_ID, count(*) as Order_count
+from Book_Order
+group by Book_Order.ISBN
+having count(Book_Order.ISBN)>=3
+UNION ALL
+select Music_CD_Order.CD_ID, count(*)
+from Music_CD_Order
+group by Music_CD_Order.CD_ID
+having count(Music_CD_Order.CD_ID)>=3;	 
+

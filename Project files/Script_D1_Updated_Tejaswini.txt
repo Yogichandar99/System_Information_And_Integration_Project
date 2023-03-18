@@ -1,0 +1,224 @@
+--DB2
+------Name: Tejaswini G -------------------------------
+------Functionality: This is an (LDB2_ordersing) database with four different tables called LDB2_customers, LDB2_orders, LDB2_products and LDB2_line_items.------------
+------Queries are made for all the six questions-------------------------------
+
+------------------Drop Sequence-------------------
+DROP SEQUENCE LDB2_Line_Item_sequence;
+DROP SEQUENCE LDB2_orders_sequence;
+DROP SEQUENCE LDB2_products_sequence;
+DROP SEQUENCE LDB2_customers_sequence;
+
+----------------Drop Tables-------------------
+drop table LDB2_line_items cascade constraints;
+drop table LDB2_orders cascade constraints;
+drop table LDB2_products cascade constraints;
+drop table LDB2_customers cascade constraints;
+-------------------Create Sequence-----------------
+
+CREATE SEQUENCE LDB2_customers_sequence
+start with 1
+increment by 1;
+
+CREATE SEQUENCE LDB2_products_sequence
+start with 20
+increment by 1;
+
+CREATE SEQUENCE LDB2_orders_sequence
+start with 40
+increment by 1;
+
+CREATE SEQUENCE LDB2_Line_Item_sequence
+start with 60
+increment by 1;
+
+
+-----------------Create Tables-----------------
+
+create table LDB2_customers (
+    cid int NOT NULL,
+    cname varchar(50),
+	address varchar(250),
+	phone varchar(15),
+	email varchar(150),
+    primary key (cid)
+    );
+ 
+    
+create table LDB2_products (
+    pid int NOT NULL ,
+	pname varchar(50),
+	pdescription varchar(150),
+	quantity int,
+	price float,
+    primary key (pid)
+	);   
+    
+
+create table LDB2_orders (
+    orid int NOT NULL,
+	cid int,
+	odate date,
+	total_price float, 
+    primary key (orid),
+    foreign key (cid) references LDB2_customers(cid)
+    );
+    
+     
+create table LDB2_line_items (
+    lid int NOT NULL,
+	orid int,
+	pid int,
+    quantity_ordered int,
+    lunit_price float,
+    primary key (lid),
+	foreign key (orid) references LDB2_orders(orid),
+	foreign key (pid) references LDB2_products(pid)
+    );
+    
+------------------Inserts------------------
+
+insert into LDB2_customers
+values(LDB2_customers_sequence.nextval,'Andy', '2350 27th south s Arlington', '4346284981', 'andyk@gmail.com');
+insert into LDB2_customers
+values(LDB2_customers_sequence.nextval,'Bob', '1283 13th North s Arlington', '4873457621', 'bobyr@gmail.com');
+insert into LDB2_customers
+values(LDB2_customers_sequence.nextval,'Catherine', '4623 9th south s Arlington', '4871259746', 'cathy@gmail.com');
+insert into LDB2_customers
+values(LDB2_customers_sequence.nextval,'Daniel', '9283 19th North s Arlington', '4763254671', 'daniel@gmail.com');
+insert into LDB2_customers
+values(LDB2_customers_sequence.nextval,'Ernest', '7623 12th East s Arlington', '4985674308', 'ernestj@gmail.com');
+insert into LDB2_customers
+values(LDB2_customers_sequence.nextval,'Francis', '1297 8th south s Arlington', '4659761203', 'franc05@gmail.com');
+insert into LDB2_customers
+values(LDB2_customers_sequence.nextval,'Grey', '9845 26th West s Arlington', '4081974185', 'grey02@gmail.com');
+insert into LDB2_customers
+values(LDB2_customers_sequence.nextval,'Hanley', '7635 14th south s Arlington', '4961653092', 'hanley@gmail.com');
+insert into LDB2_customers
+values(LDB2_customers_sequence.nextval,'Ian Cruz', '7183 29th North s Arlington', '4981732099', 'ianc459@gmail.com');
+insert into LDB2_customers
+values(LDB2_customers_sequence.nextval,'Jacob', '9346 13th south s Arlington', '4971720942', 'jacob1245@gmail.com');
+
+
+insert into LDB2_products
+values(LDB2_products_sequence.nextval, 'Spinach', 'This is a leafy vegetable', 50, 5);
+insert into LDB2_products
+values(LDB2_products_sequence.nextval, 'Avocado', 'Good Fruit', 100, 7);
+insert into LDB2_products
+values(LDB2_products_sequence.nextval, 'Eggs', 'Protein rich food', 200, 10);
+insert into LDB2_products
+values(LDB2_products_sequence.nextval, 'Bread', 'Staple food', 20, 4);
+insert into LDB2_products
+values(LDB2_products_sequence.nextval, 'Strawberries', 'Rich in antioxidants', 25, 10);
+insert into LDB2_products
+values(LDB2_products_sequence.nextval, 'Blueberries', 'Rich in vitamin C and vitamin K', 30, 15);
+insert into LDB2_products
+values(LDB2_products_sequence.nextval, 'Milk', 'Important source of many essential nutrients', 50, 5);
+insert into LDB2_products
+values(LDB2_products_sequence.nextval, 'Mushroom', 'Great source of selenium', 40, 10);
+insert into LDB2_products
+values(LDB2_products_sequence.nextval, 'Springleaf', 'Mix of multiple varieties of leafy vegetables', 20, 4);
+insert into LDB2_products
+values(LDB2_products_sequence.nextval, 'Corn', 'Rich in vitamin C and combats free radical damage', 150, 2);
+
+
+insert into LDB2_orders 
+values(LDB2_orders_sequence.nextval,1, date '2022-09-03', 59);
+insert into LDB2_orders
+values(LDB2_orders_sequence.nextval,2, date '2022-09-04', 96);
+insert into LDB2_orders
+values(LDB2_orders_sequence.nextval,3, date '2022-09-05', 62);
+insert into LDB2_orders
+values(LDB2_orders_sequence.nextval,4, date '2022-09-06', 93);
+insert into LDB2_orders
+values(LDB2_orders_sequence.nextval,5, date '2022-09-07', 50);
+insert into LDB2_orders
+values(LDB2_orders_sequence.nextval,6, date '2022-09-08', 16);
+insert into LDB2_orders
+values(LDB2_orders_sequence.nextval,7, date '2022-09-09', 4);
+insert into LDB2_orders
+values(LDB2_orders_sequence.nextval,8, date '2022-09-10', 20);
+insert into LDB2_orders
+values(LDB2_orders_sequence.nextval,9, date '2022-09-11', 21);
+insert into LDB2_orders
+values(LDB2_orders_sequence.nextval,10, date '2022-09-12', 20);
+
+
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,40,20,3,5);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,40,21,2,7);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,40,22,3,10);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,41,23,4,4);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,41,24,5,10);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,41,25,2,15);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,42,26,6,5);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,42,27,2,10);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,42,28,3,4);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,43,22,4,10);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,43,23,2,4);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,43,25,3,15);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,44,27,5,10);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,45,28,4,4);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,46,29,2,2);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,47,20,4,5);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,48,21,3,7);
+insert into LDB2_line_items
+values(LDB2_Line_Item_sequence.nextval,49,23,5,4);
+
+/*
+--commit;
+
+-------------Query 1. List all LDB2_orders in the database  -------------
+SELECT * FROM LDB2_orders;
+
+
+-------------Query 2. List all details of an LDB2_orders, given its unique identifier--------------
+SELECT * FROM LDB2_orders
+where orid= 40;
+
+
+------------Query 3. List all LDB2_orders of a particular LDB2_customers------------
+select * 
+from LDB2_orders o, LDB2_customers c
+where o.cid = c.cid and c.cid = 1;
+
+
+------------Query 4. List each LDB2_orders with at least  3 different items-----------
+select orid,LDB2_orders.cid,odate,LDB2_customers.cname
+from LDB2_orders,LDB2_customers
+where orid in(select orid from LDB2_line_items 
+group by orid
+having count(lid)>=3) and LDB2_orders.cid=LDB2_customers.cid;
+
+
+------------Query 5. List all LDB2_orders  that have been LDB2_ordersed after a specific date of your choice-----------
+select * 
+from LDB2_orders,LDB2_line_items
+where odate>date'2022-09-09' and LDB2_orders.orid=LDB2_line_items.orid;
+
+
+-----------Query 6. List the LDB2_customers name and a total number of LDB2_orders by that LDB2_customers---------------
+select cname, count(LDB2_orders.orid) as total_LDB2_orders
+from LDB2_orders,LDB2_customers 
+where LDB2_orders.cid=LDB2_customers.cid
+group by cname;
+
+
+
+*/

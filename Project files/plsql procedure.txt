@@ -1,0 +1,37 @@
+set serveroutput on;
+drop table emp;
+drop procedure prc_show_rows;
+/
+create or replace procedure prc_show_rows ( table_in varchar2 )
+is
+  CURSOR c1 IS SELECT * FROM all_tab_columns WHERE table_name = upper (table_in);
+  type table_output is table of varchar2(32000);  -- this can be a problem with large rows
+  work table_output;
+  v_statement varchar2(2000);
+BEGIN
+  --
+  v_statement := 'select ';
+  --
+  FOR j IN c1 LOOP
+    v_statement := v_statement || j.column_name || ' || '' '' || ';  -- may be you need some more formatting with appropriate to_char clauses
+  END LOOP;
+  --
+  v_statement := rtrim ( v_statement, ' |''') || ' from ' || table_in;
+  --
+  dbms_output.put_line ( v_statement ); -- not necessary, only for testing
+  --
+  execute immediate v_statement
+     bulk collect INTO work;
+  --
+  for i in 1..work.COUNT loop
+    dbms_output.put_line(work(i));
+  end loop;
+END;
+/
+create table emp(emp_id int,e_name varchar(100),primary key(emp_id));
+insert into emp values(1,'Yogichandar');
+insert into emp values(2,'Ana');
+insert into emp values(3,'Joseph');
+/
+exec prc_show_rows ( 'emp');
+--exec prc_show_rows ( 'dept');

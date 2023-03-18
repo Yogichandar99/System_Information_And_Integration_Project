@@ -1,0 +1,172 @@
+/*
+--Yogichandar boppana(NO98814)
+-- Choosen the orderding data base 
+for the project deliverable D1 
+which consists of tables customer,(LDB3_orders),LDB3_line_items and LDB3_products 
+that keeps tracks of customer details and their order details and list of different items that are ordered by a customer.
+*/
+
+--dropping the existing sequences in the db
+drop sequence LDB3_cust_id_seq;
+drop sequence LDB3_product_seq;
+drop sequence LDB3_order_id_seq;
+drop sequence LDB3_line_item_seq;
+
+-- dropping the existing tables in the DB
+drop table LDB3_line_item;
+drop table LDB3_product ;
+drop table LDB3_orders;
+drop table LDB3_customers;
+
+--creating sequences to update the values in the table
+create sequence LDB3_cust_id_seq start with  1 increment by 1;
+create sequence LDB3_product_seq start with  1 increment by 1;
+create sequence LDB3_order_id_seq start with 1 increment by 1;
+create sequence LDB3_line_item_seq start with 1 increment by 1;
+
+--creating the new tables LDB3_customers,LDB3_products,LDB3_orders,Item_line
+create table LDB3_customers
+(c_id int,
+cust_name varchar(100),
+adress varchar(100),
+phone varchar(10),
+email varchar(100),
+cc_number varchar(20),
+primary key(c_id));
+
+create table LDB3_orders
+(o_id int,
+c_id int,
+ord_date date,
+total_price float,
+primary key(o_id),
+foreign key(c_id) references LDB3_customers(c_id));
+
+create table LDB3_product
+(p_id int,
+p_name varchar(100),
+p_description  varchar (200),
+p_quantity  int,
+p_price float,
+primary key(p_id));
+
+create table LDB3_line_item 
+(l_id int,
+o_id int,
+p_id int,
+unit_price float,
+quantity  int,
+total_price float,
+c_id int,
+primary key(l_id),
+foreign key(o_id) references LDB3_orders(o_id),
+foreign key(p_id) references LDB3_product(p_id),
+foreign key(c_id) references LDB3_customers(c_id));
+
+
+--manual inserts into the table
+insert into LDB3_customers values(LDB3_cust_id_seq.nextval,'Rahul','4712 belwood green MD 21227','6673048612','rahul12@gmail.com','123467899876');
+insert into LDB3_customers values(LDB3_cust_id_seq.nextval,'Ram','4412 Courtney Road MD 21250', '4434674567','ram12@gmail.com','456745674567');
+insert into LDB3_customers values(LDB3_cust_id_seq.nextval,'Rakesh','1000 Hilltop circle MD 21250','9815791927','rakesh12@gmail.com','223422342234');
+insert into LDB3_customers values(LDB3_cust_id_seq.nextval,'Rohith','4412 aldgate green MD 21227','5634565436','rohith12@gmail.com','345634563456');
+insert into LDB3_customers values(LDB3_cust_id_seq.nextval,'Mohith','4812 drayton green MD 21227','7815671927','mohith34@gmail.com','678967896789');
+insert into LDB3_customers values(LDB3_cust_id_seq.nextval,'Vamsi','4702 Houvland gardens MD 21227','9817651567','vamsi123@gmail.com','223422342234');
+insert into LDB3_customers values(LDB3_cust_id_seq.nextval,'Khan','4812 Eldon green MD 21227','6673408765','khan23@gmail.com','123467896789');
+insert into LDB3_customers values(LDB3_cust_id_seq.nextval,'Jasmine','4703 Belwood green MD 21227','5675678861','jasmine45@gmail.com','452145214521');
+insert into LDB3_customers values(LDB3_cust_id_seq.nextval,'Hemanth','4512 Gateway terrace MD 21227','4568456847','hemanth34@gmail.com','898989891212');
+insert into LDB3_customers values(LDB3_cust_id_seq.nextval,'Sam','4817 Grenville Square MD 21227','3453456543','sam23@gmail.com','567556755675');
+
+
+
+insert into LDB3_product values(LDB3_product_seq.nextval,'pen','cello zel pen',30,3);
+insert into LDB3_product values(LDB3_product_seq.nextval,'book','Every one has a story by savi sharma',100,10);
+insert into LDB3_product values(LDB3_product_seq.nextval,'book','A brief history of time',35,15);
+insert into LDB3_product values(LDB3_product_seq.nextval,'book','The grand design',40,22);
+insert into LDB3_product values(LDB3_product_seq.nextval,'pencil','Natraj',50,2);
+insert into LDB3_product values(LDB3_product_seq.nextval,'shirt','Calvien klien',24,30);
+insert into LDB3_product values(LDB3_product_seq.nextval,'shades','Gucci',60,70);
+insert into LDB3_product values(LDB3_product_seq.nextval,'cofee cup','Tupperware',20,5);
+insert into LDB3_product values(LDB3_product_seq.nextval,'camera','canon',3,150);
+insert into LDB3_product values(LDB3_product_seq.nextval,'school bag','MK',45,30);
+
+
+insert into LDB3_orders values(LDB3_order_id_seq.nextval,1,date'2022-09-15',26);
+insert into LDB3_orders values(LDB3_order_id_seq.nextval,2,date'2022-09-10',10);
+insert into LDB3_orders values(LDB3_order_id_seq.nextval,3,date'2022-09-11',44);
+insert into LDB3_orders values(LDB3_order_id_seq.nextval,1,date'2022-09-16',70);
+insert into LDB3_orders values(LDB3_order_id_seq.nextval,2,date'2022-09-10',150);
+insert into LDB3_orders values(LDB3_order_id_seq.nextval,8,date'2022-09-08',30);
+insert into LDB3_orders values(LDB3_order_id_seq.nextval,4,date'2022-09-11',30);
+insert into LDB3_orders values(LDB3_order_id_seq.nextval,5,date'2022-09-17',30);
+insert into LDB3_orders values(LDB3_order_id_seq.nextval,6,date'2022-09-15',20);
+insert into LDB3_orders values(LDB3_order_id_seq.nextval,7,date'2022-09-05',180);
+
+
+
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,1,1,3,2,6,1);-- order id 1 contains pen, book and a cofee cup ordered by cust 1  on 15 sept
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,1,2,10,1,10,1);
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,1,8,5,2,10,1);
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,2,5,2,5,10,2);-- order id 2 has contains 2 pencils on 10 sept ordered by cust 2
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,3,4,22,2,44,3);-- orderid 3 contains 2 books on 11 sept ordrered by cust 3
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,4,7,70,1,70,1);-- order id 4 contains shades thatwas orderd by cust 1 on 16 sept
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,5,9,150,1,150,2);-- order id 5 contains camera that was ordered by cust 2 on 10 sept
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,6,10,30,1,30,8);--order id 6 contains school bag that was ordered by cust 8 on 17 sept
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,7,6,30,1,30,4);--order id 7 contains shirt that was ordered by cust 4 on 11 sept
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,8,3,15,2,30,5);--order id 8 contains a book ordered by cust 5 on 17 sept
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,9,8,5,4,20,6);--order id 9 contains cofeecup ordered by cust 6 on 15 sept
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,10,7,70,2,140,7);-- order id 10 contains shades,school bag and a cofee mug ordered by cust 7
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,10,10,30,1,30,7);
+insert into LDB3_line_item values(LDB3_line_item_seq.nextval,10,8,5,2,10,7);
+
+--commit;
+/*
+--------------------------------------query 1-------------------------------------
+--1-----------------Displays all the LDB3_orders in the DB)----------------------------
+select * from LDB3_orders;
+
+--------------------------------------query 2-----------------------------------------
+--2----------List all details of an order, given its unique identifier----------------
+
+select * from LDB3_orders,LDB3_line_item where LDB3_orders.o_id=1 and LDB3_orders.o_id=LDB3_line_item.o_id;
+--if just expecting the results only from LDB3_orders table just writing the below query will give the expected output
+--select * from LDB3_orders where o_id=1;
+
+
+-- order id 1 contains three different items in the cart which were diplayed as the output of this query
+
+--------------------------------------query 3--------------------------------------
+-----------------List all LDB3_orders of a particular customer--------------------------- 
+select * from LDB3_orders,LDB3_customers where LDB3_customers.c_id=1 and LDB3_orders.c_id=LDB3_customers.c_id;
+
+
+-- customer 1 has two LDB3_orders in the DB with order id 1 and 4 on the same date.
+---------------------------------------query 4-------------------------------------
+---------4.	List each order with at least  3 different items ---------------------
+
+select o_id,LDB3_orders.c_id,ord_date,LDB3_customers.cust_name
+from LDB3_orders,LDB3_customers
+where o_id in(select o_id from LDB3_line_item 
+group by o_id
+having count(l_id)>=3) and LDB3_orders.c_id=LDB3_customers.c_id;
+
+
+------------------------------------------query 5----------------------------------
+--5.	List all LDB3_orders  that have been ordered after a specific date of your choice--
+select * 
+from LDB3_orders,LDB3_line_item
+where ord_date>date'2022-09-15' and LDB3_orders.o_id=LDB3_line_item.o_id;
+
+-----------------------------------------query 6-----------------------------------
+----6.	List the customer name and a total number of LDB3_orders by that customer--------
+
+select cust_name,count(LDB3_orders.o_id) as total_LDB3_orders
+from LDB3_orders,LDB3_customers
+where LDB3_orders.c_id=LDB3_customers.c_id 
+group by cust_name;
+
+
+
+
+commit;
+
+*/

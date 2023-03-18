@@ -1,0 +1,146 @@
+--DELETION OF ALL THE PREEXISTING TABLES AND PROCEDURES
+drop table LDB1_line_item cascade constraints; 
+drop table LDB1_product cascade constraints; 
+drop table LDB1_orders cascade constraints;
+drop table LDB1_customer cascade constraints; 
+--CREATION OF INITIAL DATABASES
+--DB1
+--Neha Reddy Chama (QU35490)
+-- I have choosen ordering database which has LDB1_orders, LDB1_customer, LDB1_products and line item tables.
+-- This database keeps track of the LDB1_customer order information. It contains detailed information about each LDB1_customer and each purchase order.
+
+--creating LDB1_customer table
+
+create table LDB1_customer 
+(c_id int,
+c_name varchar(60),
+c_address  varchar (200),
+c_phone_number varchar(15),
+c_email varchar(100),
+primary key(c_id));
+
+--inserting values into LDB1_customer table
+
+insert into LDB1_customer VALUES(1,'Jeff','2341 park street, arligton, Virginia','5436671239','jeff1@gmail.com' );
+insert into LDB1_customer VALUES(2,'Mary','6751 newlane street, arligton, Virginia','9987234576','mary12@gmail.com' );
+insert into LDB1_customer VALUES(3,'Ria','3674 hudsun yards, arligton, Virginia','4437628798','riano@gmail.com' );
+insert into LDB1_customer VALUES(4,'Mark','9871 marine drive, arligton, Virginia','9547666719','mark123@gmail.com' );
+insert into LDB1_customer VALUES(5,'Ben','4680 aldgate green,Baltimore, Maryland','6674532897','ben99@gmail.com' );
+insert into LDB1_customer VALUES(6,'Jack','4700 fernley square, Baltimore, Maryland','6672345678','jack@gmail.com' );
+insert into LDB1_customer VALUES(7,'Moriis','4680 Chapel square, Baltimore, Maryland','6675438769','morris1@gmail.com' );
+insert into LDB1_customer VALUES(8,'Rachel','2436 belwood green, Baltimore,Maryland','6677768907','rachel@gmail.com' );
+insert into LDB1_customer VALUES(9,'Devi','3265 holand drive, Baltimore, Maryland','6675436765','devi2@gmail.com' );
+insert into LDB1_customer VALUES(10,'Natasha','4540 drayton green, Baltimore, Maryland','6673425432','natsha@gmail.com' );
+
+--creating order table
+
+create table LDB1_orders
+(o_id int,
+c_id int,
+o_date date,
+total_price float,
+o_quantity int,
+primary key(o_id),
+foreign key(c_id) references LDB1_customer(c_id));
+
+--inserting values into LDB1_orders table
+
+insert into LDB1_orders VALUES(1,2,date'2022-08-01','900',3);
+insert into LDB1_orders VALUES(2,4,date'2022-09-11','200',4);
+insert into LDB1_orders VALUES(3,5,date'2022-09-11','60',1);
+insert into LDB1_orders VALUES(4,4,date'2022-09-11','65',1);
+insert into LDB1_orders VALUES(5,5,date'2022-09-16','50',1);
+insert into LDB1_orders VALUES(6,6,date'2022-08-12','35',1);
+insert into LDB1_orders VALUES(7,7,date'2022-08-16','50',1);
+insert into LDB1_orders VALUES(8,8,date'2022-08-12','38',1);
+insert into LDB1_orders VALUES(9,9,date'2022-09-19','55',1);
+insert into LDB1_orders VALUES(10,1,date'2022-07-12','90',2);
+
+--creating LDB1_product table
+
+create table LDB1_product
+(p_id int,
+p_name varchar(60),
+p_description  varchar (500),
+p_quantity  int,
+p_price float,
+primary key(p_id)
+);
+
+--inserting values into LDB1_product table
+
+insert into LDB1_product VALUES (1,'earphone','wireless',50,120);
+insert into LDB1_product VALUES (2,'phone','iphone 13 mini',30,700);
+insert into LDB1_product VALUES (3,'bag','shoulder',40,50);
+insert into LDB1_product VALUES (4,'table','40 inch',25,60);
+insert into LDB1_product VALUES (5,'bottle','40 oz',25,45);
+insert into LDB1_product VALUES (6,'charger','iphone',30,30);
+insert into LDB1_product VALUES (7,'fan','electric',35,50);
+insert into LDB1_product VALUES (8,'dryer','revlon dryer',37,45);
+insert into LDB1_product VALUES (9,'lamp','yelow lamp 40 inch',32,35);
+insert into LDB1_product VALUES (10,'shoe stand','30 inch',23,40);
+
+--creating LDB1_line_item table
+
+create table LDB1_line_item 
+(l_id int,
+o_id int,
+p_id int,
+l_quantity int,
+primary key(l_id),
+foreign key(o_id) references LDB1_orders(o_id),
+foreign key(p_id) references LDB1_product(p_id)
+);
+
+--inserting values into LDB1_line_item table;
+
+insert into LDB1_line_item VALUES(1,1,1,1);
+insert into LDB1_line_item VALUES(2,1,2,1);
+insert into LDB1_line_item VALUES(3,1,3,1);
+insert into LDB1_line_item VALUES(4,2,3,1);
+insert into LDB1_line_item VALUES(5,2,7,1);
+insert into LDB1_line_item VALUES(6,2,5,1);
+insert into LDB1_line_item VALUES(7,3,7,1);
+insert into LDB1_line_item VALUES(8,4,4,1);
+insert into LDB1_line_item VALUES(9,5,5,1);
+insert into LDB1_line_item VALUES(10,6,6,1);
+insert into LDB1_line_item VALUES(11,7,8,1);
+insert into LDB1_line_item VALUES(12,8,9,1);
+insert into LDB1_line_item VALUES(13,9,7,1);
+insert into LDB1_line_item VALUES(14,10,10,2);
+insert into LDB1_line_item VALUES(15,2,3,1);
+
+/*
+
+--commit;
+
+--question:1
+--lists all the LDB1_orders
+select * from LDB1_orders;
+
+--question:2
+--lists all the order details when given a unique identifier
+select * from LDB1_orders where o_id=10;
+
+--question:3
+--Lists all LDB1_orders of a particular LDB1_customer 
+select * from LDB1_orders  where c_id=5;
+
+--question:4
+--Lists each order with at least  3 different items 
+select LDB1_orders.o_id,LDB1_orders.o_date, LDB1_orders.total_price,LDB1_orders.o_quantity,
+LDB1_customer.c_id,LDB1_customer.c_name from LDB1_orders,LDB1_customer 
+where LDB1_customer.c_id=LDB1_orders.c_id 
+and o_id in (select o_id  from LDB1_line_item 
+group by o_id having count(*)>=3);
+
+--question:5
+--Lists all LDB1_orders  that have been ordered after a specific date
+select * from LDB1_orders where o_date> date '2022-09-02';
+
+--question:6
+--Lists the LDB1_customer name and a total number of LDB1_orders by that LDB1_customer
+select c_name, count(*) as total_LDB1_orders from LDB1_orders,LDB1_customer where LDB1_orders.c_id = LDB1_customer.c_id group by c_name;
+
+commit;
+*/
